@@ -12,6 +12,7 @@ use App\Http\Controllers\lapanganController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\KategoriLapanganController;
+use App\Http\Controllers\ManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,10 +59,12 @@ Route::group(['middleware' => 'session_auth'], function () {
     Route::post('/booking/not-approve/{id}', [BookingController::class, 'notApprove'])->name('booking.not_approve');
     Route::post('/booking/{id}/approve', [BookingController::class, 'approve'])->name('booking.approve');
 
-    Route::get('/member', [MemberController::class, 'index'])->name('member');
-    Route::get('/members/{id}', [MemberController::class, 'show_member'])->name('members.show');
-    Route::delete('/members/{id}', [MemberController::class, 'destroy_member'])->name('members.destroy');
-    Route::post('members', [MemberController::class, 'store'])->name('members.store');
+    Route::get('/pengelola', [ManagerController::class, 'index'])->name('pengelola');
+    Route::get('/pengelola/{id}', [ManagerController::class, 'show_member'])->name('pengelola.show');
+    Route::delete('/pengelola/{id}', [ManagerController::class, 'destroy_member'])->name('pengelola.destroy');
+    Route::post('pengelola', [ManagerController::class, 'store'])->name('pengelola.store');
+    
+    Route::get('/pengguna', [MemberController::class, 'index'])->name('pengguna');
 
     Route::get('/create-katlapangan', [KategoriLapanganController::class, 'create'])->name('create_katlapangan');
     Route::post('/kategori-lapangan/store', [KategoriLapanganController::class, 'store'])->name('kategori_lapangan.store');

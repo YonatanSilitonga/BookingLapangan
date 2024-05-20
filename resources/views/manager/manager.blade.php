@@ -1,6 +1,6 @@
 @extends('layout.admin')
 
-@section('title', 'Home Member List')
+@section('title', 'Home manager List')
 
 @section('contents')
     @if ($errors->any())
@@ -18,11 +18,11 @@
         </div>
     @endif
     <div class="container">
-        <h1>Member List</h1>
+        <h1>manager List</h1>
         
-        <!-- Add Member Button -->
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addMemberModal">
-            Add Member
+        <!-- Add manager Button -->
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addmanagerModal">
+            Add manager
         </button>
         
         <table class="table">
@@ -37,20 +37,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($members as $member)
+                @foreach ($managers as $manager)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $member->id_pengguna }}</td>
-                        <td>{{ $member->username_pengguna }}</td>
-                        <td>{{ $member->jenis_pengguna }}</td>
-                        <td>{{ $member->last_login }}</td>
+                        <td>{{ $manager->id_pengguna }}</td>
+                        <td>{{ $manager->username_pengguna }}</td>
+                        <td>{{ $manager->jenis_pengguna }}</td>
+                        <td>{{ $manager->last_login }}</td>
                         <td>
                             {{-- View Button --}}
-                            <a href="{{ route('members.show', $member->id_pengguna) }}" class="btn btn-primary">View</a>
+                            <a href="{{ route('pengelola.show', $manager->id_pengguna) }}" class="btn btn-primary">View</a>
 
                             {{-- Delete Form --}}
-                            <form action="{{ route('members.destroy', $member->id_pengguna) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Are you sure you want to delete this member?')">
+                            <form action="{{ route('pengelola.destroy', $manager->id_pengguna) }}" method="POST" class="d-inline"
+                                onsubmit="return confirm('Are you sure you want to delete this manager?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -62,17 +62,17 @@
         </table>
     </div>
 
-    <!-- Add Member Modal -->
-    <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+    <!-- Add manager Modal -->
+    <div class="modal fade" id="addmanagerModal" tabindex="-1" role="dialog" aria-labelledby="addmanagerModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addMemberModalLabel">Add Member</h5>
+                    <h5 class="modal-title" id="addmanagerModalLabel">Add manager</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('members.store') }}" method="POST">
+                <form action="{{ route('pengelola.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">

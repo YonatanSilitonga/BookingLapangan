@@ -87,10 +87,16 @@
                         </div>
                     </a>
                     @if (session('jenis_pengguna') === 'pemilik')
-                        <a href="{{ route('member') }}" class="text-decoration-none text-light">
+                        <a href="{{ route('pengelola') }}" class="text-decoration-none text-light">
                             <div class="p-2.5 mt-3 d-flex align-items-center rounded hover:bg-primary cursor-pointer">
                                 <i class="bi bi-person-fill"></i>
-                                <span class="text-gray-200 ms-3">Member</span>
+                                <span class="text-gray-200 ms-3">Manager</span>
+                            </div>
+                        </a>
+                        <a href="{{ route('pengguna') }}" class="text-decoration-none text-light">
+                            <div class="p-2.5 mt-3 d-flex align-items-center rounded hover:bg-primary cursor-pointer">
+                                <i class="bi bi-people-fill"></i>
+                                <span class="text-gray-200 ms-3">Player</span>
                             </div>
                         </a>
                     @endif
