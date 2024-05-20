@@ -29,18 +29,7 @@
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="nama" name="nama_lapangan"
                                     placeholder="Nama Lapangan">
-                            </div>
-                            <div class="mb-3">
-                                <label for="kategori" class="form-label">Kategori Lapangan <span
-                                        class="text-danger">*</span></label>
-                                <select class="form-select" id="kategori" name="id_katlapangan">
-                                    <option selected disabled>Pilih Kategori Lapangan</option>
-                                    @foreach ($kategori_lapangan as $kategori)
-                                        <option value="{{ $kategori->id_katlapangan }}">{{ $kategori->nama_katlapangan }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            </div>                        
                             <div class="mb-3">
                                 <label for="harga" class="form-label">Harga Sewa <span
                                         class="text-danger">*</span></label>

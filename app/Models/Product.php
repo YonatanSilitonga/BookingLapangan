@@ -17,6 +17,9 @@ class Product extends Model
         'harga_produkolahraga',
         'stok_produkolahraga',
         'img_product',
+        'created_at',
+        'updated_at',
+        
     ];
 
     public function pengguna()

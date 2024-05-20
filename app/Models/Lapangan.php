@@ -12,17 +12,12 @@ class Lapangan extends Model
     use HasFactory;
     protected $table = 'lapangan_olahraga';
 
-    protected $fillable = [
-        'id_katlapangan',
+    protected $fillable = [      
         'nama_lapangan',
         'harga_lapangan',
         'deskripsi_lapangan', 
         'img_lapangan',
-    ];
-    public function kategori()
-    {
-        return $this->belongsTo(KategoriLapangan::class,'id_katlapangan');
-    }
+    ];    
     
     public function pengguna()
     {

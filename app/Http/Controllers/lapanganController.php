@@ -19,12 +19,8 @@ class lapanganController extends Controller
     {
         // Ambil semua data lapangan
         $data_lapangan = Lapangan::all();
-
-        // Ambil semua data kategori lapangan
-        $kategori_lapangan = KategoriLapangan::all();
-
         // Kirim data lapangan dan kategori lapangan ke tampilan
-        return view('court.lapangan', compact('data_lapangan', 'kategori_lapangan'));
+        return view('court.lapangan', compact('data_lapangan'));
     }
 
     public function lapangan_user()
@@ -49,9 +45,7 @@ class lapanganController extends Controller
 
     public function lapangan_create()
     {
-        $kategori_lapangan = KategoriLapangan::all();
-
-        return view('court.lapangan_create', compact('kategori_lapangan'));
+        return view('court.lapangan_create');
     }
     public function lapangan_store(Request $request)
     {
@@ -64,18 +58,10 @@ class lapanganController extends Controller
         $validatedData = $request->validate([
             'nama_lapangan' => 'required|string|max:255',
             'harga_lapangan' => 'required|numeric',
-            'deskripsi_lapangan' => 'required|string', // Ubah jumlahLapangan menjadi deskripsi_lapangan
-            'id_katlapangan' => 'required|exists:kategori_lapangan,id_katlapangan', // Validasi untuk ID kategori lapangan
+            'deskripsi_lapangan' => 'required|string', // Ubah jumlahLapangan menjadi             
             'img_lapangan' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
         ], $messages);
-        
-        // Validasi jumlah stok lapangan untuk kategori
-        $kategoriLapangan = KategoriLapangan::findOrFail($request->id_katlapangan);
-        $lapanganCount = Lapangan::where('id_katlapangan', $kategoriLapangan->id_katlapangan)->count();
-        if ($lapanganCount >= $kategoriLapangan->jumlah_lapangan) {
-            return redirect()->route('lapangan_index')->with('error', 'Jumlah stok lapangan untuk kategori ini telah habis.');
-        }
-        
+
 
         if ($request->hasFile('img_lapangan')) {
             $fileNameWithExt = $request->file('img_lapangan')->getClientOriginalName();
