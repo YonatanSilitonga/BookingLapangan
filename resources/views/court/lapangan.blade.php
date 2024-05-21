@@ -25,7 +25,6 @@
                     <div class="card-body">
                         <!-- Tabel Lapangan -->
                         <table class="table table-stripped">
-                            <thead class="thead-dark">
                                 <tr>
                                     <th>Nama Lapangan</th>
                                     <th>Harga Sewa</th>
@@ -68,7 +67,7 @@
                         <button type="button" class="btn btn-primary m-2"
                             onclick="window.location='{{ route('create_lapangan') }}'">ADD</button>
                     </div>
-                </div>            
+                </div>
             </div>
         </div>
     </div>
