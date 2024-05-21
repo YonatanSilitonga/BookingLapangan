@@ -10,25 +10,28 @@ class LokasiController extends Controller
     public function index()
     {
         $data = Lokasi::all();
-        return view('court.lokasi_lapangan',['data'=>$data]);
+        return view('court.lokasi_lapangan', ['data' => $data]);
     }
-    public function store(Request $request) {
+
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'nama_lokasi' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
-        $path = $request->file('foto')->store('public/lokasi');
-    
+
+        $path = $request->file('foto') ? $request->file('foto')->store('public/lokasi') : null;
+
         Lokasi::create([
-            'nama_lokasi' => $request->nama_lokasi,
-            'alamagt' => $request->alamat,
-            'deskripsi' => $request->deskripsi,
+            'nama_lokasi' => $validatedData['nama_lokasi'],
+            'alamat' => $validatedData['alamat'],
+            'deskripsi' => $validatedData['deskripsi'],
             'foto' => $path,
+            'update_at' => time()
         ]);
-    
-        return response()->json(['success' => 'Lokasi berhasil ditambahkan']);
+
+        return redirect()->route('lapangan_index')->with('success', 'Lokasi berhasil ditambahkan');
     }
 }
