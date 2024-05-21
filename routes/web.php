@@ -3,8 +3,10 @@
 use App\Models\Lapangan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Session\Session;
+use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CheckoutController;
@@ -12,7 +14,6 @@ use App\Http\Controllers\lapanganController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\KategoriLapanganController;
-use App\Http\Controllers\ManagerController;
 
 /*
 |--------------------------------------------------------------------------

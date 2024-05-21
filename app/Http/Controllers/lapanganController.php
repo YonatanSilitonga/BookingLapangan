@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lokasi;
 use App\Models\Lapangan;
 use Illuminate\Http\Request;
 use App\Models\KategoriLapangan;
@@ -19,10 +20,13 @@ class lapanganController extends Controller
     {
         // Ambil semua data lapangan
         $data_lapangan = Lapangan::all();
-        // Kirim data lapangan dan kategori lapangan ke tampilan
-        return view('court.lapangan', compact('data_lapangan'));
+        // Ambil semua data lokasi
+        $data = Lokasi::all();
+        
+        // Kirim data lapangan dan data lokasi ke tampilan
+        return view('court.lapangan', compact('data_lapangan', 'data'));
     }
-
+    
     public function lapangan_user()
     {
         $data_lapangan = Lapangan::all();
@@ -45,6 +49,8 @@ class lapanganController extends Controller
 
     public function lapangan_create()
     {
+       
+
         return view('court.lapangan_create');
     }
     public function lapangan_store(Request $request)
@@ -58,10 +64,11 @@ class lapanganController extends Controller
         $validatedData = $request->validate([
             'nama_lapangan' => 'required|string|max:255',
             'harga_lapangan' => 'required|numeric',
-            'deskripsi_lapangan' => 'required|string', // Ubah jumlahLapangan menjadi             
+            'deskripsi_lapangan' => 'required|string', // Ubah jumlahLapangan menjadi deskripsi_lapangan
+            'id_katlapangan' => 'required|exists:kategori_lapangan,id_katlapangan', // Validasi untuk ID kategori lapangan
             'img_lapangan' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
         ], $messages);
-
+        
 
         if ($request->hasFile('img_lapangan')) {
             $fileNameWithExt = $request->file('img_lapangan')->getClientOriginalName();
