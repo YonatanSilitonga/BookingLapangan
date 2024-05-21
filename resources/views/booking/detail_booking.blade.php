@@ -31,13 +31,7 @@
                             <div class="col-md-8">
                                 <p>{{ $booking->lapangan->nama_lapangan }}</p>
                             </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="kategori" class="col-md-4 col-form-label fw-bold">Kategori Lapangan:</label>
-                            <div class="col-md-8">
-                                <p>{{ $booking->lapangan->kategori->nama_katlapangan }}</p>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="mb-3 row">
                             <label for="waktu_mulai" class="col-md-4 col-form-label fw-bold">Waktu Mulai:</label>
                             <div class="col-md-8">

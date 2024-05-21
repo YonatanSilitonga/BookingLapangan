@@ -11,6 +11,7 @@
 
 @endsection
 @section('content')
+<<<<<<< Updated upstream
     <div class="container">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -39,6 +40,42 @@
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Lengkap</label>
                         <input type="text" class="form-control" id="nama" name="nama">
+=======
+<div class="container">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if (session('success'))
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <p>Anda akan memesan lapangan
+            <h2>{{ $lapangan->nama_lapangan }}</h2>                        
+            <hr>
+            <form action="{{ route('submit_booking') }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <label for="nama" class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" value="{{ session('username') }}" id="nama" name="nama">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Alamat Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="waktu_mulai" class="form-label">Waktu Mulai</label>
+                        <input type="datetime-local" class="form-control" id="waktu_mulai" name="waktu_mulai">
+>>>>>>> Stashed changes
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Alamat Email</label>

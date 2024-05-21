@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\BookingOlahraga;
 use App\Models\KategoriLapangan;
 use App\Models\PenggunaOlahraga;
+use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
@@ -24,19 +25,39 @@ class BookingController extends Controller
 
     public function submitBooking(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'waktu_mulai' => 'required|date_format:Y-m-d\TH:i',
-            'waktu_selesai' => 'required|date_format:Y-m-d\TH:i|after_or_equal:waktu_mulai',
+
+            'waktu_selesai' => [
+                'required',
+                'date_format:Y-m-d\TH:i',
+                'after:waktu_mulai',
+                function ($attribute, $value, $fail) use ($request) {
+                    $waktu_mulai = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->waktu_mulai);
+                    $waktu_selesai = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $value);
+                    if ($waktu_selesai->diffInHours($waktu_mulai) < 1) {
+                        $fail('Waktu selesai harus minimal 1 jam setelah waktu mulai.');
+                    }
+                },
+            ],
             'catatan' => 'nullable|string',
             'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
+<<<<<<< Updated upstream
             'kategori_id' => 'required|exists:kategori_lapangan,id_katlapangan',
+=======
+>>>>>>> Stashed changes
             'nama_lapangan' => 'required|string'
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         // Dapatkan ID pengguna dari sesi
         $id_pengguna = session('id_pengguna');
+
         var_dump($id_pengguna);
 
 
@@ -170,4 +191,8 @@ class BookingController extends Controller
         // Kemudian kembalikan tampilan dengan data jadwal
         return view('booking.jadwal', compact('jadwal'));
     }
+    
+
+
+    
 }
