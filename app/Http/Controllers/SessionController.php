@@ -81,6 +81,7 @@ class SessionController extends Controller
                 'jenis_pengguna' => $pengguna->jenis_pengguna
             ]);
 
+
             // Redirect ke halaman sesuai jenis pengguna
             switch ($pengguna->jenis_pengguna) {
                 case 'pemilik':
