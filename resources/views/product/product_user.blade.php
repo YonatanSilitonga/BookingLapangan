@@ -76,7 +76,7 @@
                         <!-- Contoh: -->
                         <div class="mb-3">
                             <label for="nama">Nama:</label>
-                            <input type="text" class="form-control" id="nama" name="nama">
+                            <input type="text" class="form-control" id="nama" name="nama" value="{{ session('username') }}">
                         </div>
                         <div class="mb-3">
                             <label for="jumlah">Jumlah:</label>
