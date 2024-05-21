@@ -22,11 +22,11 @@ class lapanganController extends Controller
         $data_lapangan = Lapangan::all();
         // Ambil semua data lokasi
         $data = Lokasi::all();
-        
+
         // Kirim data lapangan dan data lokasi ke tampilan
         return view('court.lapangan', compact('data_lapangan', 'data'));
     }
-    
+
     public function lapangan_user()
     {
         $data_lapangan = Lapangan::all();
@@ -49,10 +49,10 @@ class lapanganController extends Controller
 
     public function lapangan_create()
     {
-       
-
-        return view('court.lapangan_create');
+        $data_lokasi = Lokasi::all(); // Fetch all Lokasi data
+        return view('court.lapangan_create', ['data_lokasi' => $data_lokasi]);
     }
+
     public function lapangan_store(Request $request)
     {
         $messages = [
@@ -68,7 +68,7 @@ class lapanganController extends Controller
             'id_katlapangan' => 'required|exists:kategori_lapangan,id_katlapangan', // Validasi untuk ID kategori lapangan
             'img_lapangan' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
         ], $messages);
-        
+
 
         if ($request->hasFile('img_lapangan')) {
             $fileNameWithExt = $request->file('img_lapangan')->getClientOriginalName();
