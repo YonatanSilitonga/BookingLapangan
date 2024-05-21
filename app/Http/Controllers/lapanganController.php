@@ -65,7 +65,7 @@ class lapanganController extends Controller
             'nama_lapangan' => 'required|string|max:255',
             'harga_lapangan' => 'required|numeric',
             'deskripsi_lapangan' => 'required|string', // Ubah jumlahLapangan menjadi deskripsi_lapangan
-            'id_katlapangan' => 'required|exists:kategori_lapangan,id_katlapangan', // Validasi untuk ID kategori lapangan
+            'id_lokasi' => 'required|exists:lokasi,id_lokasi', // Validasi untuk ID kategori lapangan
             'img_lapangan' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar
         ], $messages);
 
