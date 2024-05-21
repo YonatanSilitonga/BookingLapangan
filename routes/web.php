@@ -113,3 +113,5 @@ Route::post('/register_form', [RegisterController::class, 'store'])->name('form_
 
 Route::get('/lapangan_user', [lapanganController::class, 'lapangan_user'])->name('view_lapangan');
 Route::get('/lapangan_user_show/{id}', [lapanganController::class, 'user_court_show'])->name('user_court_show');
+
+Route::post('/lokasi', [LokasiController::class, 'store'])->name('create_lokasi');
