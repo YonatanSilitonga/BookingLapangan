@@ -18,7 +18,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        
+
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <!-- Tabel Lokasi -->
@@ -143,7 +143,7 @@
     $(document).ready(function() {
         $('#addLocationForm').on('submit', function(event) {
             event.preventDefault();
-            
+
             var formData = new FormData(this);
 
             $.ajax({
