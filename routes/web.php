@@ -11,6 +11,7 @@ use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\GeneratePdf;
 use App\Http\Controllers\lapanganController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
@@ -34,6 +35,9 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => 'session_auth'], function () {
+
+    Route::get('/booking/pdf', [GeneratePdf::class, 'generatePDF'])->name('booking.pdf');
+
     //halaman dashboard
     Route::get('/admin_dashboard', [SessionController::class, 'admin'])->name('admin_dashboard');
     //CRUD Product
@@ -66,7 +70,7 @@ Route::group(['middleware' => 'session_auth'], function () {
     Route::get('/pengelola/{id}', [ManagerController::class, 'show_member'])->name('pengelola.show');
     Route::delete('/pengelola/{id}', [ManagerController::class, 'destroy_member'])->name('pengelola.destroy');
     Route::post('pengelola', [ManagerController::class, 'store'])->name('pengelola.store');
-    
+
     Route::get('/pengguna', [MemberController::class, 'index'])->name('pengguna');
 
     Route::get('/create-katlapangan', [KategoriLapanganController::class, 'create'])->name('create_katlapangan');
@@ -141,5 +145,3 @@ Route::post('/membership/beli', [MembershipController::class, 'beliMembership'])
 
 // Ubah rute status untuk menerima id_pengguna sebagai parameter query
 Route::get('/membership/status', [MembershipController::class, 'statusMembership'])->name('membership.status');
-
-Route::get('/booking/pdf', [BookingController::class, 'generatePDF'])->name('booking.pdf');
