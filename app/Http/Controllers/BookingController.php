@@ -16,10 +16,8 @@ class BookingController extends Controller
         // Temukan lapangan berdasarkan ID
         $lapangan = Lapangan::findOrFail($id_lapangan);
 
-        $kategori = KategoriLapangan::findOrFail($lapangan->id_katlapangan);
-
         // Kirim data lapangan dan kategori ke halaman form booking
-        return view('booking.form', compact('lapangan', 'kategori'));
+        return view('booking.form', compact('lapangan'));
     }
 
     public function submitBooking(Request $request)
@@ -30,8 +28,7 @@ class BookingController extends Controller
             'waktu_mulai' => 'required|date_format:Y-m-d\TH:i',
             'waktu_selesai' => 'required|date_format:Y-m-d\TH:i|after_or_equal:waktu_mulai',
             'catatan' => 'nullable|string',
-            'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
-            'kategori_id' => 'required|exists:kategori_lapangan,id_katlapangan',
+            'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',            
             'nama_lapangan' => 'required|string'
         ]);
 
