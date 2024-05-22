@@ -24,12 +24,16 @@ class LokasiController extends Controller
 
         $path = $request->file('foto') ? $request->file('foto')->store('public/lokasi') : null;
 
+        $username = session('username');
+
         Lokasi::create([
             'nama_lokasi' => $validatedData['nama_lokasi'],
             'alamat' => $validatedData['alamat'],
             'deskripsi' => $validatedData['deskripsi'],
             'foto' => $path,
-            'update_at' => time()
+            'update_at' => time(),
+            'created_by' => $username,
+            'updated_by' => $username,
         ]);
 
         return redirect()->route('lapangan_index')->with('success', 'Lokasi berhasil ditambahkan');

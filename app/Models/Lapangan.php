@@ -24,6 +24,10 @@ class Lapangan extends Model
     {
         return $this->belongsToMany(PenggunaOlahraga::class, 'booking_olahraga', 'id_lapangan', 'id_pengguna');
     }
+    public function lokasi()
+    {
+        return $this->belongsTo(Lokasi::class, 'id_lokasi');
+    }
     
 }
 

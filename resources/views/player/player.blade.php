@@ -4,14 +4,14 @@
 
 @section('contents')
     <div class="container">
-        <h1>Pengelola List</h1>
+        <h1>Player List</h1>
         <table class="table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Username</th>
-                    <th>Email</th>
                     <th>Last Login</th>
+                    <th>Jenis Pelanggan</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,8 +19,8 @@
                     <tr>
                         <td>{{ $player->id_pengguna }}</td>
                         <td>{{ $player->username_pengguna }}</td>
-                        <td>{{ $player->email_pengguna }}</td>
                         <td>{{ $player->last_login }}</td>
+                        <td>{{ $player->pelanggan->jenis_pelanggan }}</td>
                     </tr>
                 @endforeach
             </tbody>

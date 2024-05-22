@@ -11,11 +11,13 @@ class PenggunaOlahraga extends Model
     
     protected $fillable = [
         'username_pengguna',
+        'id_pelanggan',
         'password_pengguna',
         'created_by',
         'updated_by',
         'last_login', 
         'jenis_pengguna',
+        'tgl_member_berakhir'
     ];
     
     protected $primaryKey = 'id_pengguna';
@@ -23,6 +25,11 @@ class PenggunaOlahraga extends Model
     public function lapangan()
     {
         return $this->belongsToMany(Lapangan::class, 'booking_olahraga', 'id_pengguna', 'id_lapangan');
+    }
+
+    public function pelanggan()
+    {
+        return $this->hasOne(Pelanggan::class, 'id_pelanggan', 'id_pelanggan'); // Make sure the foreign and local keys are correct
     }
 
     public function produk()

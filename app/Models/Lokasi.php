@@ -20,7 +20,8 @@ class Lokasi extends Model
         'foto',
         'deskripsi',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'created_by'
     ];
  
     public function lapangan()

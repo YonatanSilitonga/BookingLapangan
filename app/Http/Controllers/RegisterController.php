@@ -33,6 +33,7 @@ class RegisterController extends Controller
             'username_pengguna' => $request->username,
             'password_pengguna' => Hash::make($request->password),
             'jenis_pengguna' => 'pelanggan',  // Default jenis_pengguna
+            'id_pelanggan' => '1',
         ];
 
         $createdBy = $request->username;

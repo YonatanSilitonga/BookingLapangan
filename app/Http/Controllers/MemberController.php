@@ -12,7 +12,7 @@ class MemberController extends Controller
     public function index()
     {
         // Retrieve all members with jenis_pengguna 'pengelola' from the database
-        $players = PenggunaOlahraga::where('jenis_pengguna', 'pelanggan')->get();
+        $players = PenggunaOlahraga::with('pelanggan')->where('jenis_pengguna', 'pelanggan')->get();
     
         // Pass the players data to the view
         return view('player.player', compact('players'));
