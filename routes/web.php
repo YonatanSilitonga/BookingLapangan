@@ -141,3 +141,5 @@ Route::post('/membership/beli', [MembershipController::class, 'beliMembership'])
 
 // Ubah rute status untuk menerima id_pengguna sebagai parameter query
 Route::get('/membership/status', [MembershipController::class, 'statusMembership'])->name('membership.status');
+
+Route::get('/booking/pdf', [BookingController::class, 'generatePDF'])->name('booking.pdf');

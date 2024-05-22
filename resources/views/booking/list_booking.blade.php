@@ -23,19 +23,20 @@
             @endif
             <div class="col-md-12">
                 <h2>Booking List</h2>
+                <a href="{{ route('booking.pdf') }}" class="btn btn-primary mb-3">Download PDF</a>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>#</th>                                                    
+                            <th>#</th>
                             <th>Nama Lapangan</th>
                             <th>Waktu Mulai</th>
-                            <th>Waktu Selesai</th>                            
+                            <th>Waktu Selesai</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($bookings as $booking)
-                            @if ($booking->status == '' )
+                            @if ($booking->status == '')
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     {{-- <td>{{ $booking->nama_pemesan }}</td>
@@ -47,7 +48,7 @@
                                     <td>{{ $booking->catatan }}</td>
                                     <td>{{ $booking->lapangan->kategori->nama_katlapangan }}</td> --}}
                                     <td>
-                                        
+
                                         <form action="{{ route('booking.approve', $booking->id_booking_olahraga) }}"
                                             method="POST" class="d-inline">
                                             @csrf
@@ -55,18 +56,22 @@
                                                 onclick="return confirm('Apakah Anda yakin ingin menyetujui booking ini?')">Approve</button>
                                         </form>
 
-                                        
-                                        <form action="{{ route('booking.not_approve', $booking->id_booking_olahraga) }}" method="POST" class="d-inline">
+
+                                        <form action="{{ route('booking.not_approve', $booking->id_booking_olahraga) }}"
+                                            method="POST" class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menolak booking ini?')">Not Approve</button>
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Apakah Anda yakin ingin menolak booking ini?')">Not
+                                                Approve</button>
                                         </form>
                                     </td>
-                                    <td>                                       
-                                        <a href="{{ route('booking.show', $booking->id_booking_olahraga) }}" class="btn btn-primary">Detail</a>                                        
+                                    <td>
+                                        <a href="{{ route('booking.show', $booking->id_booking_olahraga) }}"
+                                            class="btn btn-primary">Detail</a>
                                     </td>
                                 </tr>
-                                @endif
-                            @endforeach
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
