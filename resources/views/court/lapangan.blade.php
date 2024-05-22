@@ -79,11 +79,11 @@
                                                 <div class="btn-group" role="group">
                                                     <button type="button" class="btn btn-success m-2" data-toggle="modal"
                                                         data-target="#editModal{{ $item->id_lapangan }}">
-                                                        EDIT
+                                                        Edit
                                                     </button>
                                                     <button type="button" class="btn btn-success m-2" data-toggle="modal"
                                                         data-target="#detailModal{{ $item->id_lapangan }}">
-                                                        DETAIL
+                                                        Detail
                                                     </button>
                                                     <form action="{{ route('lapangan.destroy', $item->id_lapangan) }}"
                                                         method="POST"
