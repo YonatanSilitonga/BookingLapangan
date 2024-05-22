@@ -42,10 +42,6 @@ class BookingController extends Controller
             ],
             'catatan' => 'nullable|string',
             'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
-<<<<<<< Updated upstream
-            'kategori_id' => 'required|exists:kategori_lapangan,id_katlapangan',
-=======
->>>>>>> Stashed changes
             'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',            
             'nama_lapangan' => 'required|string'
         ]);
