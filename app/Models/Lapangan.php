@@ -17,6 +17,7 @@ class Lapangan extends Model
         'harga_lapangan',
         'deskripsi_lapangan', 
         'img_lapangan',
+        'id_lokasi',
     ];    
     
     public function pengguna()

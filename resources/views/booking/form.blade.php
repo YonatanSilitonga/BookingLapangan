@@ -5,9 +5,9 @@
 @section('sub_title', 'Booking Form >')
 @section('dynamic_nav_links')
 
-    <li class="nav-item">
-        <a class="nav-link" href="#">{{ $lapangan->nama_lapangan }}</a>
-    </li>
+<li class="nav-item">
+    <a class="nav-link" href="#">{{ $lapangan->nama_lapangan }}</a>
+</li>
 
 @endsection
 @section('content')
