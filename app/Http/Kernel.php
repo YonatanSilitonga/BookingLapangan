@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         // 'auth.session' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'session_auth' => \App\Http\Middleware\Islogin::class,
         'auth.check' => \App\Http\Middleware\CheckUserAuthentication::class,
+        'auth' => \App\Http\Middleware\Authenticate::class,
     ];
 }

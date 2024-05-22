@@ -1,26 +1,17 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pelanggan extends Model
 {
-    use HasFactory;
-
     protected $table = 'pelanggan';
-
-    protected $fillable = [
-        'id_pelanggan',
-        'jenis_pelanggan',
-
-    ];
-
     protected $primaryKey = 'id_pelanggan';
+    protected $fillable = ['id_pengguna', 'jenis_pelanggan', 'tgl_berakhir_member','updated_at'];
 
-    public function PenggunaOlahraga()
+    // Relasi dengan tabel pengguna_olahraga (jika diperlukan)
+    public function pengguna()
     {
-        return $this->belongsTo(Pelanggan::class, 'id_pelanggan', 'id_pelanggan');
+        return $this->belongsTo(PenggunaOlahraga::class, 'id_pengguna');
     }
 }

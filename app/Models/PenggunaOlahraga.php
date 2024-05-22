@@ -10,8 +10,7 @@ class PenggunaOlahraga extends Model
     protected $table = 'pengguna_olahraga';
     
     protected $fillable = [
-        'username_pengguna',
-        'id_pelanggan',
+        'username_pengguna',        
         'password_pengguna',
         'created_by',
         'updated_by',

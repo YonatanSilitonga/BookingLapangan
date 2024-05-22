@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Lapangan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Session\Session;
 use App\Http\Controllers\LokasiController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\lapanganController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\KategoriLapanganController;
 
 /*
@@ -119,3 +121,23 @@ Route::post('/lapangan/lokasi/tambah', [LokasiController::class, 'store'])->name
 Route::get('/lapangan/lokasi/tambah', function () {
     return view('court.lokasi.lokasi_lapangan');
 });
+
+Route::post('/login', function () {
+    $credentials = request()->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        session(['is_logged_in' => true, 'username' => $user->name, 'is_member' => $user->jenis_pelanggan === 'member']);
+
+        return redirect()->intended('/');
+    }
+
+    return redirect('/login')->withErrors('Invalid credentials');
+});
+
+
+Route::get('/membership/beli', [MembershipController::class, 'beliForm'])->name('membership.beli');
+Route::post('/membership/beli', [MembershipController::class, 'beliMembership']);
+
+// Ubah rute status untuk menerima id_pengguna sebagai parameter query
+Route::get('/membership/status', [MembershipController::class, 'statusMembership'])->name('membership.status');
