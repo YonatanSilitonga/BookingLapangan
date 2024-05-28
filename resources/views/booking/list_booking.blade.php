@@ -38,14 +38,9 @@
                             @if ($booking->status == '' )
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    {{-- <td>{{ $booking->nama_pemesan }}</td>
-                                    <td>{{ $booking->email_pemesan }}</td> --}}
                                     <td>{{ $booking->lapangan->nama_lapangan }}</td>
                                     <td>{{ $booking->waktu_mulai_booking }}</td>
                                     <td>{{ $booking->waktu_selesai_booking }}</td>
-                                    {{-- <td>{{ $booking->created_at }}</td>
-                                    <td>{{ $booking->catatan }}</td>
-                                    <td>{{ $booking->lapangan->kategori->nama_katlapangan }}</td> --}}
                                     <td>
                                         
                                         <form action="{{ route('booking.approve', $booking->id_booking_olahraga) }}"

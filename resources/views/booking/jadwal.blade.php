@@ -17,6 +17,7 @@
                                 <th>Nama Lapangan</th>
                                 <th>Nama Pemesan</th>
                                 <th>Waktu Mulai Booking</th>
+                                <th>Waktu Selesai Booking</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,6 +27,7 @@
                                     <td>{{ $booking->lapangan->nama_lapangan }}</td>
                                     <td>{{ $booking->nama_pemesan }}</td>
                                     <td>{{ \Carbon\Carbon::parse($booking->waktu_mulai_booking)->format('d/m/Y H:i') }}
+                                    <td>{{ \Carbon\Carbon::parse($booking->waktu_selesai_booking)->format('d/m/Y H:i') }}
                                     </td>
                                 </tr>
                             @endforeach

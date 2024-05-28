@@ -46,7 +46,7 @@
   <div class="container">
     <h1>500</h1>
     <h2>Koneksi Error</h2>
-    <p>Sepertinya koneksi Anda sedang bermasalah cek kembali internet anda</p>
+    <p>Waduh ! Hilang internet nih. Coba ulang lagi</p>
     <a href="/">Kembali</a>
   </div>
 </body>

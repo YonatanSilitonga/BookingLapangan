@@ -13,9 +13,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BookingLapangan</a>
+            <a class="navbar-brand" href="/"><b>Badminton Jagoku - Indonesia</b></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,13 +26,13 @@
                 @if (session('is_logged_in'))
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
+                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}" href="{{ route('view_product') }}">Product</a>
+                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}" href="{{ route('view_product') }}">Produk</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}" href="{{ route('view_lapangan') }}">Court</a>
+                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}" href="{{ route('view_lapangan') }}">Lapangan</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('booking') ? 'active' : '' }}" href="{{ route('booking_info') }}">Booking</a>
@@ -43,17 +43,22 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('membership/status') ? 'active' : '' }}" href="{{ route('membership.status', ['id_pengguna' => $idPengguna ?? 'id_pengguna']) }}">Beli membership</a>
                         </li>
+                        @if(session('jenis_pengguna') === 'pemilik')
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/admin_dashboard') }}">Admin Dashboard</a>
+                        </li>
+                        @endif
                     </ul>
                 @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
+                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}" href="{{ route('view_product') }}">Product</a>
+                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}" href="{{ route('view_product') }}">Produk</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}" href="{{ route('view_lapangan') }}">Court</a>
+                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}" href="{{ route('view_lapangan') }}">Lapangan</a>
                         </li>
                     </ul>
                 @endif
@@ -64,9 +69,9 @@
                     @if (session('is_logged_in'))
                         <span class="navbar-text text-light me-3">
                             @if (UserHelper::isMember(session('id_pengguna')))
-                                Member Status: <span class="badge bg-success">Member</span>
+                                Member Status: <span class="badge bg-success">Membership</span>
                             @else
-                                Member Status: <span class="badge bg-danger">Non-Member</span>
+                                Member Status: <span class="badge bg-danger">Not a Membership</span>
                             @endif
                         </span>
                         <a href="{{ route('cart') }}" class="cart-icon-link text-light me-5">

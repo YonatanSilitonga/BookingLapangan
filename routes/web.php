@@ -16,6 +16,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\KategoriLapanganController;
+use App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,19 @@ use App\Http\Controllers\KategoriLapanganController;
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::post('/login', function () {
+    $credentials = request()->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        session(['is_logged_in' => true, 'username' => $user->name, 'is_member' => $user->jenis_pelanggan === 'member']);
+
+        return redirect()->intended('/');
+    }
+
+    return redirect('/login')->withErrors('Ada yang salah. Coba lagi');
 });
 
 
@@ -63,18 +77,11 @@ Route::group(['middleware' => 'session_auth'], function () {
     Route::post('/booking/{id}/approve', [BookingController::class, 'approve'])->name('booking.approve');
 
     Route::get('/pengelola', [ManagerController::class, 'index'])->name('pengelola');
-    Route::get('/pengelola/{id}', [ManagerController::class, 'show_member'])->name('pengelola.show');
     Route::delete('/pengelola/{id}', [ManagerController::class, 'destroy_member'])->name('pengelola.destroy');
     Route::post('pengelola', [ManagerController::class, 'store'])->name('pengelola.store');
     
     Route::get('/pengguna', [MemberController::class, 'index'])->name('pengguna');
 
-    Route::get('/create-katlapangan', [KategoriLapanganController::class, 'create'])->name('create_katlapangan');
-    Route::post('/kategori-lapangan/store', [KategoriLapanganController::class, 'store'])->name('kategori_lapangan.store');
-    Route::get('/kategori-lapangan/{id}', [KategoriLapanganController::class, 'show'])->name('detail_katlapangan');
-    Route::get('/edit/{id}', [KategoriLapanganController::class, 'edit'])->name('edit_katlapangan');
-    Route::put('/kategori_lapangan/{id}', [KategoriLapanganController::class, 'update'])->name('kategori_lapangan.update');
-    Route::delete('/kategori-lapangan/{id}', [KategoriLapanganController::class, 'destroy'])->name('kategori_lapangan.destroy');
 });
 
 
@@ -117,27 +124,32 @@ Route::post('/register_form', [RegisterController::class, 'store'])->name('form_
 Route::get('/lapangan_user', [lapanganController::class, 'lapangan_user'])->name('view_lapangan');
 Route::get('/lapangan_user_show/{id}', [lapanganController::class, 'user_court_show'])->name('user_court_show');
 
+
+
+// ==Lokasi==
 Route::post('/lapangan/lokasi/tambah', [LokasiController::class, 'store'])->name('create_lokasi');
+Route::get('/lapangan/{id}/edit', [LapanganController::class, 'edit_lapangan'])->name('update.lapangan');
+
+Route::get('/lapangan/lokasi/{id}/edit', [LokasiController::class, 'edit_lokasi'])->name('update.lokasi');
+Route::put('/lapangan/lokasi/{id}/update', [LokasiController::class, 'update_lokasi'])->name('update.lok');
+Route::delete('/lapangan/lokasi/{id}/hapus', [LokasiController::class, 'destroy_lokasi'])->name('lokasi.destroy');
+
+
+
 Route::get('/lapangan/lokasi/tambah', function () {
     return view('court.lokasi.lokasi_lapangan');
 });
 
-Route::post('/login', function () {
-    $credentials = request()->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        session(['is_logged_in' => true, 'username' => $user->name, 'is_member' => $user->jenis_pelanggan === 'member']);
-
-        return redirect()->intended('/');
-    }
-
-    return redirect('/login')->withErrors('Invalid credentials');
+Route::get('/error403', function () {
+    return view('errors.403');
 });
 
+Route::get('/error', [ErrorController::class, 'index403'])->name('error403');
+
+
+
+// == Membership ==
 
 Route::get('/membership/beli', [MembershipController::class, 'beliForm'])->name('membership.beli');
 Route::post('/membership/beli', [MembershipController::class, 'beliMembership']);
-
-// Ubah rute status untuk menerima id_pengguna sebagai parameter query
 Route::get('/membership/status', [MembershipController::class, 'statusMembership'])->name('membership.status');

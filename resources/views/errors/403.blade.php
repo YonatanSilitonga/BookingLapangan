@@ -46,7 +46,8 @@
   <div class="container">
     <h1>403</h1>
     <h2>Forbiden</h2>
-    <p>Anda seharusnya tidak datang kemari 😿</p>
+    <h2>Eitsss, mau ke mana nih ?</h2>
+    <p>Anda seharusnya tidak datang kemari karena anda tidak memiliki akses</p>
     <a href="/">Kembali</a>
   </div>
 </body>

@@ -16,7 +16,8 @@ class PenggunaOlahraga extends Model
         'updated_by',
         'last_login', 
         'jenis_pengguna',
-        'tgl_member_berakhir'
+        'tgl_member_berakhir',
+        'id_lokasi'
     ];
     
     protected $primaryKey = 'id_pengguna';
@@ -28,7 +29,7 @@ class PenggunaOlahraga extends Model
 
     public function pelanggan()
     {
-        return $this->hasOne(Pelanggan::class, 'id_pelanggan', 'id_pelanggan'); // Make sure the foreign and local keys are correct
+        return $this->hasOne(Pelanggan::class, 'id_pelanggan', 'id_pelanggan');
     }
 
     public function produk()

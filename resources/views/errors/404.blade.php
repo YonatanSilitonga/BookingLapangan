@@ -46,7 +46,7 @@
   <div class="container">
     <h1>404</h1>
     <h2>Halaman Tidak Ditemukan</h2>
-    <p>Sepertinya Anda tersesat di belantara internet. Jangan khawatir, Anda bisa kembali ke beranda atau menjelajahi bagian lain dari website kami.</p>
+    <p>Keknya elu tersesat. Gpp, mungkin aja ada yang salah di server atau memang website yang kamu cari ga ada... hehe</p>
     <a href="/">Kembali</a>
   </div>
 </body>

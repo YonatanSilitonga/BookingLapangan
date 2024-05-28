@@ -20,11 +20,10 @@
                         <td>{{ $player->id_pengguna }}</td>
                         <td>{{ $player->username_pengguna }}</td>
                         <td>{{ $player->last_login }}</td>
-                        <td>{{ $player->pelanggan->jenis_pelanggan }}</td>
+                        <td>{{ optional($player->pelanggan)->jenis_pelanggan ?? 'Biasa' }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('home') }}" class="btn btn-primary">Back</a>
     </div>
 @endsection

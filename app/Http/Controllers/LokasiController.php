@@ -38,4 +38,38 @@ class LokasiController extends Controller
 
         return redirect()->route('lapangan_index')->with('success', 'Lokasi berhasil ditambahkan');
     }
+    public function update_lokasi(Request $request, string $id_lokasi)
+    {
+        $Lokasi = Lokasi::findOrFail($id_lokasi);
+
+        $validatedData = $request->validate([
+            'nama_lokasi' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+        ], [
+            'nama_lokasi.required' => 'Nama lokasi wajib diisi.',
+            'alamat.required' => 'Alamat lapangan wajib diisi.',
+            'deskripsi.required' => 'Deskripsi alamat wajib diisi.',
+        ]);        
+
+        $Lokasi->update($validatedData);
+
+        return redirect()->route('lapangan_index')->with('success', 'Lokasi '.$Lokasi->nama_lokasi.' telah diperbaharui');
+    }
+    public function edit_lokasi($id_lokasi)
+    {
+        $lokasi = Lokasi::findOrFail($id_lokasi);
+        return view('court.lokasi.lokasi_lapangan_edit', compact('lokasi'));
+    }
+    public function destroy_lokasi(string $id_lokasi)
+    {
+
+        $lokasi = Lokasi::findOrFail($id_lokasi);
+
+
+        $lokasi->delete();
+
+
+        return redirect()->route('lapangan_index')->with('success', 'Lokasi ' .$lokasi->nama_lokasi. ' telah dihapus');
+    }
 }
