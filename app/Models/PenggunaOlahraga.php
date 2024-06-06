@@ -34,6 +34,11 @@ class PenggunaOlahraga extends Model
     {
         return $this->belongsTo(Pelanggan::class, 'id_pengguna', 'id_pengguna');
     }
+    // PenggunaOlahraga Model
+    public function pengelola()
+    {
+        return $this->belongsTo(Manager::class, 'id_pengguna', 'id_pengguna','id_lapangan');
+    }
 
     public function produk()
     {

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lokasi;
+use App\Models\Manager;
 use Illuminate\Http\Request;
 use App\Models\PenggunaOlahraga;
 use Illuminate\Support\Facades\Hash;
@@ -11,17 +13,19 @@ class ManagerController extends Controller
     public function index()
     {
         // Retrieve all manager with jenis_pengguna 'pengelola' from the database
-        $managers = PenggunaOlahraga::where('jenis_pengguna', 'pengelola')->get();
+        $managers = PenggunaOlahraga::with('pengelola')->where('jenis_pengguna', 'pengelola')->get();
+
+        $data = Lokasi::all();
 
         // Pass the manager data to the view
-        return view('manager.manager', compact('managers'));
+        return view('manager.manager', compact('managers','data'));
     }
 
 
     public function show_member($id_pengguna)
     {
         // Retrieve the member with the given ID from the database
-        $member = PenggunaOlahraga::findOrFail($id_pengguna);
+        $member = PenggunaOlahraga::findOrFail($id_pengguna)->where('jenis_pengguna', 'pengelola')->get();
 
         // Pass the member data to the view
         return view('manager.manager_show', compact('member'));
@@ -42,17 +46,29 @@ class ManagerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id_pengguna' => 'required',
             'username' => 'required|unique:pengguna_olahraga,username_pengguna',
             'password' => 'required|min:6',
+            'id_lokasi' => 'required|exists:lokasi,id_lokasi', // Validasi untuk ID kategori lapangan
         ]);
 
         PenggunaOlahraga::create([
+            'id_pengguna' => $request -> id_pengguna,
             'username_pengguna' => $request->username,
             'password_pengguna' => Hash::make($request->password),
             'jenis_pengguna' => 'pengelola',
-            'created_by' => 'admin', // Nilai default 'admin'      
-            'updated_by' => 'admin', // Nilai default 'admin'      
+            'created_by' => 'admin', // Nilai default 'admin'                  
+            'udpated_by' => 'admin', // Nilai default 'admin'                  
         ]);
+        
+        Manager::create([
+            'id_lapangan' => $request->id_lokasi,
+            'id_pengguna' => $request->id_pengguna,            
+            'tanggal_mulai' => time(),            
+            'created_by' => 'admin', // Nilai default 'admin'                  
+            'status' => 'aktif', // Nilai default 'admin'                  
+        ]);
+    
 
         return redirect()->back()->with('success', 'Member berhasil ditambahkan.');
     }

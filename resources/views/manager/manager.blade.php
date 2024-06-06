@@ -19,17 +19,18 @@
     @endif
     <div class="container">
         <h1>manager List</h1>
-        
+
         <!-- Add manager Button -->
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addmanagerModal">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addmanagerModal">
             Add manager
         </button>
-        
+
         <table class="table">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>ID</th>
+                    <th>Status</th>
                     <th>Username</th>
                     <th>Jenis Pengguna</th>
                     <th>Last Login</th>
@@ -41,6 +42,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $manager->id_pengguna }}</td>
+                        <td>{{ optional($manager->pengelola)->status ?? 'Null'}}</td>
                         <td>{{ $manager->username_pengguna }}</td>
                         <td>{{ $manager->jenis_pengguna }}</td>
                         <td>{{ $manager->last_login }}</td>
@@ -49,8 +51,8 @@
                             <a href="{{ route('pengelola.show', $manager->id_pengguna) }}" class="btn btn-primary">View</a>
 
                             {{-- Delete Form --}}
-                            <form action="{{ route('pengelola.destroy', $manager->id_pengguna) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Are you sure you want to delete this manager?')">
+                            <form action="{{ route('pengelola.destroy', $manager->id_pengguna) }}" method="POST"
+                                class="d-inline" onsubmit="return confirm('Are you sure you want to delete this manager?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -63,7 +65,8 @@
     </div>
 
     <!-- Add manager Modal -->
-    <div class="modal fade" id="addmanagerModal" tabindex="-1" role="dialog" aria-labelledby="addmanagerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addmanagerModal" tabindex="-1" role="dialog" aria-labelledby="addmanagerModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -76,13 +79,26 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="id_pengguna">No ID</label>
+                            <input type="number" class="form-control" id="id_pengguna" name="id_pengguna" required>
+                        </div>
+                        <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" name="password" required>
-                        </div>                        
+                        </div>
+                        <div class="form-group">
+                            <label for="lokasiLapangan" class="form-label">Lokasi Lapangan</label>
+                            <select class="form-control" id="lokasi" name="id_lokasi">
+                                <option value="">Pilih Lokasi</option>
+                                @foreach ($data as $lokasi)
+                                    <option value="{{ $lokasi->id_lokasi }}">{{ $lokasi->nama_lokasi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

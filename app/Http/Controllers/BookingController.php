@@ -42,7 +42,7 @@ class BookingController extends Controller
             ],
             'catatan' => 'nullable|string',
             'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
-            'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',            
+            'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
             'nama_lapangan' => 'required|string'
         ]);
 
@@ -91,9 +91,15 @@ class BookingController extends Controller
         // Temukan booking berdasarkan ID
         $booking = BookingOlahraga::findOrFail($id);
 
-        // Ubah status booking menjadi "approve"
-        $booking->status = 'approve';
-        $booking->save();
+        // Dapatkan pengguna terkait booking
+        $pengguna = $booking->pengguna;
+
+        // Periksa apakah pengguna adalah member
+        if ($pengguna->isMember()) {
+            // Ubah status booking menjadi "approve"
+            $booking->status = 'approve';
+            $booking->save();
+        }
 
         // Ambil data semua booking dari database
         $bookings = BookingOlahraga::with(['lapangan'])->get();
@@ -186,8 +192,4 @@ class BookingController extends Controller
         // Kemudian kembalikan tampilan dengan data jadwal
         return view('booking.jadwal', compact('jadwal'));
     }
-    
-
-
-    
 }

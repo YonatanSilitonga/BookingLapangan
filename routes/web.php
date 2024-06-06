@@ -70,8 +70,10 @@ Route::group(['middleware' => 'session_auth'], function () {
     Route::get('/pengelola/{id}', [ManagerController::class, 'show_member'])->name('pengelola.show');
     Route::delete('/pengelola/{id}', [ManagerController::class, 'destroy_member'])->name('pengelola.destroy');
     Route::post('pengelola', [ManagerController::class, 'store'])->name('pengelola.store');
-
+    
     Route::get('/pengguna', [MemberController::class, 'index'])->name('pengguna');
+    Route::delete('/pengguna/{id}', [MemberController::class, 'destroy_member'])->name('pengguna.destroy');
+    Route::post('pengguna', [MemberController::class, 'store'])->name('pengguna.store');
 
     Route::get('/create-katlapangan', [KategoriLapanganController::class, 'create'])->name('create_katlapangan');
     Route::post('/kategori-lapangan/store', [KategoriLapanganController::class, 'store'])->name('kategori_lapangan.store');

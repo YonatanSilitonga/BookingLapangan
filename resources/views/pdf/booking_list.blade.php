@@ -27,6 +27,7 @@
 
 <body>
     <h2>Booking List</h2>
+    <h1>Dipesan oleh {{ $bookings->$user->username_pengguna }}</h1><br>
     <table>
         <thead>
             <tr>
@@ -34,6 +35,8 @@
                 <th>Nama Lapangan</th>
                 <th>Waktu Mulai</th>
                 <th>Waktu Selesai</th>
+                <th>Waktu Pembookingan</th>
+                <th>Lapangan yang dibooking</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +46,8 @@
                     <td>{{ $booking->lapangan->nama_lapangan }}</td>
                     <td>{{ $booking->waktu_mulai_booking }}</td>
                     <td>{{ $booking->waktu_selesai_booking }}</td>
+                    <td>{{ $booking->created_at }}</td>
+                    <td>{{ $booking->nama_lapangan }}</td>
                 </tr>
             @endforeach
         </tbody>

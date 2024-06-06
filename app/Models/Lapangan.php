@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lapangan extends Model
 {
+    use HasFactory;
+
     protected $primaryKey = 'id_lapangan';
     
-    use HasFactory;
     protected $table = 'lapangan_olahraga';
 
     protected $fillable = [      
@@ -27,6 +28,10 @@ class Lapangan extends Model
     public function lokasi()
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi');
+    }
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class, 'id_lapangan','id_lapangan');
     }
     
 }

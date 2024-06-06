@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Generation Time: May 21, 2024 at 06:37 AM
+-- Generation Time: May 22, 2024 at 11:26 AM
 -- Server version: 10.4.11-MariaDB-log
 -- PHP Version: 8.2.12
 
@@ -44,6 +44,13 @@ CREATE TABLE `booking_olahraga` (
   `status` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `booking_olahraga`
+--
+
+INSERT INTO `booking_olahraga` (`id_booking_olahraga`, `id_pengguna`, `waktu_mulai_booking`, `waktu_selesai_booking`, `created_at`, `created_by`, `updated_at`, `updated_by`, `id_lapangan`, `nama_pemesan`, `email_pemesan`, `catatan`, `nama_lapangan`, `status`) VALUES
+(89, 9131, '2024-05-22 03:20:00', '2024-05-22 04:20:00', '2024-05-21 20:20:31', 'yonatan', '2024-05-21 20:20:31', NULL, 138, 'yonatan', 'guru@gmail.com', NULL, 'lapangan basket 1', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +70,14 @@ CREATE TABLE `lapangan_olahraga` (
   `img_lapangan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `lapangan_olahraga`
+--
+
+INSERT INTO `lapangan_olahraga` (`id_lapangan`, `id_lokasi`, `nama_lapangan`, `harga_lapangan`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deskripsi_lapangan`, `img_lapangan`) VALUES
+(138, 1, 'lapangan basket 2', 1230000, '2024-05-21 18:41:19', NULL, '2024-05-22 02:36:04', NULL, 'keren', 'img/badminton1_1716316879.jpeg'),
+(139, 1, 'lapangan basket', 12300002, '2024-05-22 03:21:01', NULL, '2024-05-22 03:21:01', NULL, 'VSD', 'img/badminton2_1716348060.jpeg');
+
 -- --------------------------------------------------------
 
 --
@@ -74,8 +89,19 @@ CREATE TABLE `lokasi` (
   `nama_lokasi` varchar(50) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `deskripsi` text DEFAULT NULL,
-  `foto` varchar(255) DEFAULT NULL
+  `foto` varchar(255) DEFAULT NULL,
+  `updated_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_by` varchar(225) DEFAULT NULL,
+  `updated_by` varchar(225) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`id_lokasi`, `nama_lokasi`, `alamat`, `deskripsi`, `foto`, `updated_at`, `created_at`, `created_by`, `updated_by`) VALUES
+(1, 'jl siantar', 'balimbingan tanah jawa', 'lapangan kosongo', NULL, '2024-05-21 18:40:40', '2024-05-21 18:40:40', 'jawir', NULL);
 
 -- --------------------------------------------------------
 
@@ -85,10 +111,19 @@ CREATE TABLE `lokasi` (
 
 CREATE TABLE `pelanggan` (
   `id_pelanggan` int(11) NOT NULL,
-  `id_pengguna` int(11) NOT NULL,
   `jenis_pelanggan` enum('biasa','member') NOT NULL,
-  `tgl_berakhir_member` date DEFAULT NULL
+  `id_pengguna` int(12) NOT NULL,
+  `tgl_berakhir_member` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pelanggan`
+--
+
+INSERT INTO `pelanggan` (`id_pelanggan`, `jenis_pelanggan`, `id_pengguna`, `tgl_berakhir_member`, `updated_at`, `created_at`) VALUES
+(3, 'member', 9132, '2025-05-22 03:13:41', '2024-05-22 03:13:41', '2024-05-22 03:13:41');
 
 -- --------------------------------------------------------
 
@@ -99,11 +134,22 @@ CREATE TABLE `pelanggan` (
 CREATE TABLE `pengelola_lapangan` (
   `id_pengelola_lapangan` int(11) NOT NULL,
   `id_lapangan` int(11) NOT NULL,
-  `tanggal_mulai` date NOT NULL,
-  `tanggal_selesai` date DEFAULT NULL,
-  `status` enum('aktif','nonaktif') NOT NULL DEFAULT 'aktif',
-  `keterangan` text DEFAULT NULL
+  `id_pengguna` int(12) NOT NULL,
+  `tanggal_mulai` datetime NOT NULL,
+  `tanggal_selesai` datetime DEFAULT NULL,
+  `status` enum('aktif','nonaktif') DEFAULT 'aktif',
+  `keterangan` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` varchar(225) DEFAULT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengelola_lapangan`
+--
+
+INSERT INTO `pengelola_lapangan` (`id_pengelola_lapangan`, `id_lapangan`, `id_pengguna`, `tanggal_mulai`, `tanggal_selesai`, `status`, `keterangan`, `created_at`, `created_by`, `updated_at`) VALUES
+(1, 139, 9133, '2024-05-01 00:00:00', '2024-05-02 00:00:00', 'aktif', 'masih bekerja', '0000-00-00 00:00:00', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -119,20 +165,23 @@ CREATE TABLE `pengguna_olahraga` (
   `created_at` datetime(6) DEFAULT NULL,
   `created_by` varchar(20) NOT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `updated_by` varchar(20) NOT NULL,
-  `last_login` datetime DEFAULT NULL
+  `updated_by` varchar(20) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `tgl_member_berakhir` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pengguna_olahraga`
 --
 
-INSERT INTO `pengguna_olahraga` (`id_pengguna`, `username_pengguna`, `password_pengguna`, `jenis_pengguna`, `created_at`, `created_by`, `updated_at`, `updated_by`, `last_login`) VALUES
-(9125, 'jawir', '$2y$10$Rp04/teLeItsZXcYYebBaufVIR4zxHAkeHOITUnDWWxSYe/eX.g.W', 'pemilik', '2024-05-20 03:00:57.000000', 'admin', '2024-05-21 04:20:10', 'admin', '2024-05-21 04:20:10'),
-(9126, 'yanti', '$2y$10$.xWMRpTeHouVTJ2bp20XuecYaGy.f4zPmtySWVwrzwnvzc3XfQlKi', 'pelanggan', '2024-05-20 03:02:18.000000', 'admin', '2024-05-20 03:02:39', 'admin', '2024-05-20 03:02:39'),
-(9128, 'sepin', '$2y$10$R4RVVwLgDbiu5cwXwtMOn.okc1f3rJ2WM8YmvqysK06CkZmh.0lum', 'pelanggan', '2024-05-20 03:04:55.000000', 'sepin', '2024-05-20 03:05:00', 'sepin', '2024-05-20 03:05:00'),
-(9129, 'daniel', '$2y$10$jdXmKxVW0O0MAO9U.ocAtucRvYiS9y9ZwPQv9qM8EN6Dd9vsoMjKG', 'pengelola', '2024-05-20 03:07:35.000000', 'admin', '2024-05-21 04:18:56', 'admin', '2024-05-21 04:18:56'),
-(9130, 'gomgom', '$2y$10$nLqWimY6NBQvImmwNPZoROnigBszkmiBMxUOZExQJdovM61lhgDmK', 'pelanggan', '2024-05-20 03:17:39.000000', 'gomgom', '2024-05-20 03:17:47', 'gomgom', '2024-05-20 03:17:47');
+INSERT INTO `pengguna_olahraga` (`id_pengguna`, `username_pengguna`, `password_pengguna`, `jenis_pengguna`, `created_at`, `created_by`, `updated_at`, `updated_by`, `last_login`, `tgl_member_berakhir`) VALUES
+(3, 'jawir', '$2a$12$zaavdPT5wDJCNg1iAutgsuD9RoBmabLDi7.f5weKlprt/.g4GcSgu', 'pemilik', NULL, '', '2024-05-22 07:33:37', '', '2024-05-22 07:33:37', '0000-00-00 00:00:00'),
+(9131, 'yonatan', '$2y$10$ZZJOkfhsbJi7DwvNq7AbAOKUL0/pqIHd7YRqvUgeRhWieiuz2ZVO2', 'pelanggan', '2024-05-21 19:58:23.000000', 'yonatan', '2024-05-22 02:40:08', 'yonatan', '2024-05-22 02:40:08', '0000-00-00 00:00:00'),
+(9132, 'samuel', '$2y$10$an./3dXnqsgUOYL45mBhnOHS7AsxbXGo5UyhG6LMiZ3/4WxKDXbBa', 'pelanggan', '2024-05-22 03:08:07.000000', 'samuel', '2024-05-22 03:13:20', 'samuel', '2024-05-22 03:13:20', NULL),
+(9133, 'jawa', '$2y$10$dQtuCqBiJw.hGGKxSWFRPuo2kM6FZRMo5diRT9AaBpoSAT0Zc3vDO', 'pengelola', '2024-05-22 07:39:44.000000', 'admin', '2024-05-22 07:39:44', 'admin', NULL, NULL),
+(9134, 'gurusekolah', '$2y$10$.OD1unZsUSWgLWXpgTD6qu9smoz756DJ3.stdgCi8ngifr.stdgg2', 'pengelola', '2024-05-22 08:52:31.000000', 'admin', '2024-05-22 08:52:31', 'admin', NULL, NULL),
+(9135, 'manager', '$2y$10$UjFpYZqPdCTtsNOQSKIFMeQya9GSvAcmzdMzxNWkU/O4WV9P6Qp4u', 'pengelola', '2024-05-22 09:02:45.000000', 'admin', '2024-05-22 09:02:45', NULL, NULL, NULL),
+(9136, 'cobalagi', '$2y$10$1tguNj2s2O91qxkJg2XX4OYP6CnKRsgYBRrydRYT27LyQn8JW6nEK', 'pengelola', '2024-05-22 09:06:45.000000', 'admin', '2024-05-22 09:06:45', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,6 +258,8 @@ ALTER TABLE `lokasi`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`),
+  ADD KEY `jenis_pelanggan` (`jenis_pelanggan`),
+  ADD KEY `jenis_pelanggan_2` (`jenis_pelanggan`),
   ADD KEY `id_pengguna` (`id_pengguna`);
 
 --
@@ -216,7 +267,8 @@ ALTER TABLE `pelanggan`
 --
 ALTER TABLE `pengelola_lapangan`
   ADD PRIMARY KEY (`id_pengelola_lapangan`),
-  ADD KEY `id_lapangan` (`id_lapangan`);
+  ADD KEY `id_lapangan` (`id_lapangan`),
+  ADD KEY `id_pengguna` (`id_pengguna`);
 
 --
 -- Indexes for table `pengguna_olahraga`
@@ -246,37 +298,37 @@ ALTER TABLE `transaksi_olahraga`
 -- AUTO_INCREMENT for table `booking_olahraga`
 --
 ALTER TABLE `booking_olahraga`
-  MODIFY `id_booking_olahraga` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id_booking_olahraga` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `lapangan_olahraga`
 --
 ALTER TABLE `lapangan_olahraga`
-  MODIFY `id_lapangan` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id_lapangan` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lokasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pengelola_lapangan`
 --
 ALTER TABLE `pengelola_lapangan`
-  MODIFY `id_pengelola_lapangan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengelola_lapangan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pengguna_olahraga`
 --
 ALTER TABLE `pengguna_olahraga`
-  MODIFY `id_pengguna` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9131;
+  MODIFY `id_pengguna` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9137;
 
 --
 -- AUTO_INCREMENT for table `transaksi_olahraga`
@@ -305,13 +357,14 @@ ALTER TABLE `lapangan_olahraga`
 -- Constraints for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  ADD CONSTRAINT `id_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna_olahraga` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `pelanggan` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna_olahraga` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pengelola_lapangan`
 --
 ALTER TABLE `pengelola_lapangan`
-  ADD CONSTRAINT `pengelola_lapangan_ibfk_1` FOREIGN KEY (`id_lapangan`) REFERENCES `lapangan_olahraga` (`id_lapangan`);
+  ADD CONSTRAINT `pengelola_lapangan` FOREIGN KEY (`id_lapangan`) REFERENCES `lapangan_olahraga` (`id_lapangan`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pengelola_lapangan2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna_olahraga` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaksi_olahraga`

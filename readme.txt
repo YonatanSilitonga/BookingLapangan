@@ -5,12 +5,17 @@ password  :
 
 Username & Password
 * Admin
-- Username : admin
-- Password : admin
+- Username : jawir
+- Password : pemilik 	
 
 * User
-- Username : Pak Oppir
-- Password : Baik Hati
+- Username : yonatan
+- Password : silitonga
+
+* Pengelola
+- Username : risk
+- Password : pemilik
+
 
 ENV file ada di
 .env.example hapus ".example" nya

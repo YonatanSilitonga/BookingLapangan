@@ -93,13 +93,13 @@
                                 <span class="text-gray-200 ms-3">Manager</span>
                             </div>
                         </a>
-                        <a href="{{ route('pengguna') }}" class="text-decoration-none text-light">
-                            <div class="p-2.5 mt-3 d-flex align-items-center rounded hover:bg-primary cursor-pointer">
-                                <i class="bi bi-people-fill"></i>
-                                <span class="text-gray-200 ms-3">Player</span>
-                            </div>
-                        </a>
                     @endif
+                    <a href="{{ route('pengguna') }}" class="text-decoration-none text-light">
+                        <div class="p-2.5 mt-3 d-flex align-items-center rounded hover:bg-primary cursor-pointer">
+                            <i class="bi bi-people-fill"></i>
+                            <span class="text-gray-200 ms-3">Player</span>
+                        </div>
+                    </a>
                     <a href="#" class="text-decoration-none text-light">
                         <div class="p-2.5 mt-3 d-flex align-items-center rounded hover:bg-primary cursor-pointer">
                             <i class="bi bi-box-arrow-in-right"></i>
@@ -121,7 +121,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </body>
 
 </html>

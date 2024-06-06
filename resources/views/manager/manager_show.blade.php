@@ -10,21 +10,27 @@
                 <tr>
                     <th>ID</th>
                     <th>Username</th>
-                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Mulai</th>
+                    <th>Selesai</th>
                     <th>Last Login</th>
+                    <th>Lapangan Bekerja</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($managers as $manager)
+                @foreach ($member as $manager)
                     <tr>
                         <td>{{ $manager->id_pengguna }}</td>
                         <td>{{ $manager->username_pengguna }}</td>
-                        <td>{{ $manager->email_pengguna }}</td>
+                        <td>{{ $manager->pengelola->status }}</td>
+                        <td>{{ $manager->pengelola->tanggal_mulai }}</td>
+                        <td>{{ $manager->pengelola->tanggal_selesai }}</td>
                         <td>{{ $manager->last_login }}</td>
+                        <td>{{ $manager->pengelola->lapangan->nama_lapangan }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('home') }}" class="btn btn-primary">Back</a>
+        <a href="{{ route('pengelola') }}" class="btn btn-primary">Back</a>
     </div>
 @endsection
