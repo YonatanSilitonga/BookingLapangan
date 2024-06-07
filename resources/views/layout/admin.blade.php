@@ -19,16 +19,12 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-auto">
                     <div class="p-2.5 mt-1 d-flex align-items-center">
-                        <i class="bi bi-app-indicator px-2 py-1 rounded-md bg-primary"></i>
-                        <h1 class="font-bold text-gray text-sm m-0">Admin Dashboard</h1>
+                        <h1 class="font-bold text-gray text-sm m-0">Dashboard</h1>
                     </div>
                     <hr class="my-2 bg-secondary">
                 </div>
                 <div class="col-auto d-flex align-items-center">
-                    <img src="{{ asset('images/botak.jpg') }}" alt="Profile Image" class="rounded-circle me-2"
-                        style="width: 40px; height: 40px;">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             {{ session('username') }}
                         </button>
