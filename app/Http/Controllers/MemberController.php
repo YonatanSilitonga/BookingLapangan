@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Models\PenggunaOlahraga;
 use Illuminate\Routing\Controller;
@@ -46,5 +47,27 @@ class MemberController extends Controller
 
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Member has been deleted successfully.');
+    }
+
+    public function updateStatus(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'id_pengguna' => 'required|exists:pengguna_olahraga,id_pengguna',
+            'id_lokasi' => 'required|in:1,2', // 1 for Member, 2 for Biasa
+        ]);
+
+        // Temukan pengguna berdasarkan ID
+        $pengguna = PenggunaOlahraga::findOrFail($request->id_pengguna);
+
+        // Tentukan jenis pelanggan berdasarkan input
+        $jenis_pelanggan = $request->id_lokasi == 1 ? 'member' : 'biasa';
+
+        // Perbarui jenis pelanggan
+        $pengguna->jenis_pelanggan = $jenis_pelanggan;
+        $pengguna->save();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Status member berhasil diperbarui.');
     }
 }

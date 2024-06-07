@@ -6,6 +6,7 @@ use App\Models\Lokasi;
 use App\Models\Manager;
 use Illuminate\Http\Request;
 use App\Models\PenggunaOlahraga;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ManagerController extends Controller
@@ -18,7 +19,7 @@ class ManagerController extends Controller
         $data = Lokasi::all();
 
         // Pass the manager data to the view
-        return view('manager.manager', compact('managers','data'));
+        return view('manager.manager', compact('managers', 'data'));
     }
 
 
@@ -42,36 +43,40 @@ class ManagerController extends Controller
         return redirect()->back()->with('success', 'Member has been deleted successfully.');
     }
 
-    // Method untuk menyimpan member baru
     public function store(Request $request)
     {
+        // Validasi input pengguna
         $request->validate([
-            'id_pengguna' => 'required',
             'username' => 'required|unique:pengguna_olahraga,username_pengguna',
             'password' => 'required|min:6',
             'id_lokasi' => 'required|exists:lokasi,id_lokasi', // Validasi untuk ID kategori lapangan
         ]);
-
-        PenggunaOlahraga::create([
-            'id_pengguna' => $request -> id_pengguna,
-            'username_pengguna' => $request->username,
-            'password_pengguna' => Hash::make($request->password),
-            'jenis_pengguna' => 'pengelola',
-            'created_by' => 'admin', // Nilai default 'admin'                  
-            'udpated_by' => 'admin', // Nilai default 'admin'                  
-        ]);
-        
-        Manager::create([
-            'id_lapangan' => $request->id_lokasi,
-            'id_pengguna' => $request->id_pengguna,            
-            'tanggal_mulai' => time(),            
-            'created_by' => 'admin', // Nilai default 'admin'                  
-            'status' => 'aktif', // Nilai default 'admin'                  
-        ]);
     
-
+        // Menggunakan transaksi database untuk memastikan operasi atomik
+        DB::transaction(function () use ($request) {
+            // Menyimpan data pengguna
+            $pengguna = PenggunaOlahraga::create([
+                'username_pengguna' => $request->username,
+                'password_pengguna' => Hash::make($request->password),
+                'jenis_pengguna' => 'pengelola',
+                'created_by' => 'admin', // Nilai default 'admin'
+                'updated_by' => 'admin', // Nilai default 'admin'
+            ]);
+    
+            // Menyimpan data manajer dengan menggunakan ID pengguna yang baru disimpan
+            Manager::create([
+                'id_lokasi' => $request->id_lokasi,
+                'id_pengguna' => $pengguna->id_pengguna,
+                'tanggal_mulai' => now(), // Menggunakan fungsi now() untuk mendapatkan tanggal dan waktu saat ini
+                'created_by' => 'admin', // Nilai default 'admin'
+                'status' => 'aktif', // Nilai default 'aktif'
+            ]);
+        });
+    
         return redirect()->back()->with('success', 'Member berhasil ditambahkan.');
     }
+    
+
     /**
      * Display a listing of the resource.
      *

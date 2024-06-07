@@ -70,22 +70,23 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel{{ $item->id_pengguna }}">Edit Lapangan
-                        </h5>
+                        <h5 class="modal-title" id="editModalLabel{{ $item->id_pengguna }}">Edit Lapangan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="POST" {{-- <form action="{{ route('lapangan.update', $item->id_pengguna) }}" method="POST" --}} enctype="multipart/form-data">
+                        <form action="{{ route('updatedStatus') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
+                            <input type="hidden" name="id_pengguna" value="{{ $item->id_pengguna }}">
+
                             <div class="mb-3">
-                                <label for="namaLapangan" class="form-label">Nama Lapangan</label>
+                                <label for="namaLapangan" class="form-label">Ganti status member</label>
                                 <select class="form-select" id="lokasiLapangan" name="id_lokasi">
-
-                                    <option>Member</option>
-                                    <option>Biasa</option>
-
+                                    <option value="1" {{ $item->jenis_pelanggan == 'member' ? 'selected' : '' }}>
+                                        Member</option>
+                                    <option value="2" {{ $item->jenis_pelanggan == 'biasa' ? 'selected' : '' }}>Biasa
+                                    </option>
                                 </select>
                             </div>
 
@@ -99,6 +100,8 @@
             </div>
         </div>
     @endforeach
+
+
 
     <!-- Add manager Modal -->
     <div class="modal fade" id="addPlayerModal" tabindex="-1" role="dialog" aria-labelledby="addmanagerModalLabel"

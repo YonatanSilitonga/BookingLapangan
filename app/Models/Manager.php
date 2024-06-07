@@ -11,7 +11,7 @@ class Manager extends Model
 
     protected $table = 'pengelola_lapangan';
     protected $primaryKey = 'id_pengelola_lapangan';
-    protected $fillable = ['id_pengguna', 'id_lapangan', 'tanggal_mulai', 'tanggal_selesai', 'status', 'keterangan','created_at','created_by','updated_at'];
+    protected $fillable = ['id_pengguna', 'id_lokasi', 'tanggal_mulai', 'tanggal_selesai', 'status', 'keterangan','created_at','created_by','updated_at'];
 
     // Pelanggan Model
     public function pengguna()
@@ -22,7 +22,7 @@ class Manager extends Model
     // Pelanggan Model
     public function lapangan()
     {
-        return $this->hasOne(Lapangan::class, 'id_lapangan','id_lapangan');
+        return $this->hasOne(Lokasi::class, 'id_lokasi','id_lokasi');
     }
 
 }

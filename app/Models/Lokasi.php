@@ -28,5 +28,9 @@ class Lokasi extends Model
     {
         return $this->hasMany(Lokasi::class, 'id_lokasi');
     }
+    public function manager()
+    {
+        return $this->belongsTo(Manager::class, 'id_lokasi','id_lokasi');
+    }
     use HasFactory;
 }

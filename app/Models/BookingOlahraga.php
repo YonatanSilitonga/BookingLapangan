@@ -18,6 +18,7 @@ class BookingOlahraga extends Model
         'nama_pemesan',
         'email_pemesan',
         'nama_lapangan',
+        'status',
         'created_by'
     ];
 
