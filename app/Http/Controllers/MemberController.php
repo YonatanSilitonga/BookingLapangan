@@ -53,26 +53,21 @@ class MemberController extends Controller
     {
         // Validasi input
         $request->validate([
-            'id_pengguna' => 'required|exists:pelanggan,id_pelanggan',
+            'id_pengguna' => 'required|exists:pengguna_olahraga,id_pengguna',
             'id_lokasi' => 'required|in:1,2', // 1 for Member, 2 for Biasa
         ]);
 
-        try {
-            // Temukan pelanggan berdasarkan ID
-            $pelanggan = Pelanggan::findOrFail($request->id_pengguna);
+        // Temukan pengguna berdasarkan ID
+        $pengguna = PenggunaOlahraga::findOrFail($request->id_pengguna);
 
-            // Tentukan jenis pelanggan berdasarkan input
-            $jenis_pelanggan = $request->id_lokasi == 1 ? 'member' : 'biasa';
+        // Tentukan jenis pelanggan berdasarkan input
+        $jenis_pelanggan = $request->id_lokasi == 1 ? 'member' : 'biasa';
 
-            // Perbarui jenis pelanggan
-            $pelanggan->jenis_pelanggan = $jenis_pelanggan;
-            $pelanggan->save();
+        // Perbarui jenis pelanggan
+        $pengguna->jenis_pelanggan = $jenis_pelanggan;
+        $pengguna->save();
 
-            // Redirect kembali dengan pesan sukses
-            return redirect()->back()->with('success', 'Status member berhasil diperbarui.');
-        } catch (\Exception $e) {
-            // Tangani jika terjadi kesalahan
-            return redirect()->back()->with('error', 'Gagal memperbarui status member: ' . $e->getMessage());
-        }
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Status member berhasil diperbarui.');
     }
 }
