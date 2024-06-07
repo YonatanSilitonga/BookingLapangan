@@ -23,7 +23,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card shadow">
                         <div class="card-body">
-                            <img src="{{ asset('storage/' . $lapangan->img_lapangan) }}" class="card-img-top"
+                            <img src="{{ asset( $lapangan->img_lapangan) }}" class="card-img-top"
                                 alt="Lapangan {{ $lapangan->nama_lapangan }}">
                             <h5 class="card-title m-3">
                                 {{ $lapangan->nama_lapangan }}</h5>

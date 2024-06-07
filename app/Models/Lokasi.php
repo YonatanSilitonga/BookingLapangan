@@ -17,7 +17,6 @@ class Lokasi extends Model
         'id_lokasi',
         'nama_lokasi', 
         'alamat',
-        'foto',
         'deskripsi',
         'created_at',
         'updated_at',

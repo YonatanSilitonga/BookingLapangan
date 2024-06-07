@@ -26,39 +26,50 @@
                 @if (session('is_logged_in'))
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a>
+                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}"
+                                href="{{ url('/') }}">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}" href="{{ route('view_product') }}">Produk</a>
+                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}"
+                                href="{{ route('view_product') }}">Produk</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}" href="{{ route('view_lapangan') }}">Lapangan</a>
+                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}"
+                                href="{{ route('view_lapangan') }}">Lapangan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('booking') ? 'active' : '' }}" href="{{ route('booking_info') }}">Booking</a>
+                            <a class="nav-link {{ request()->is('booking') ? 'active' : '' }}"
+                                href="{{ route('booking_info') }}">Booking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('jadwal') ? 'active' : '' }}" href="{{ route('jadwal.index') }}">Informasi Jadwal</a>
+                            <a class="nav-link {{ request()->is('jadwal') ? 'active' : '' }}"
+                                href="{{ route('jadwal.index') }}">Informasi Jadwal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('membership/status') ? 'active' : '' }}" href="{{ route('membership.status', ['id_pengguna' => $idPengguna ?? 'id_pengguna']) }}">Beli membership</a>
+                            <a class="nav-link {{ request()->is('membership/status') ? 'active' : '' }}"
+                                href="{{ route('membership.status', ['id_pengguna' => $idPengguna ?? 'id_pengguna']) }}">Beli
+                                membership</a>
                         </li>
-                        @if(session('jenis_pengguna') === 'pemilik')
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/admin_dashboard') }}">Admin Dashboard</a>
-                        </li>
+                        @if (session('jenis_pengguna') === 'pemilik')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('/') ? 'active' : '' }}"
+                                    href="{{ url('/admin_dashboard') }}">Admin Dashboard</a>
+                            </li>
                         @endif
                     </ul>
                 @else
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a>
+                            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}"
+                                href="{{ url('/') }}">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}" href="{{ route('view_product') }}">Produk</a>
+                            <a class="nav-link {{ request()->is('product_user') ? 'active' : '' }}"
+                                href="{{ route('view_product') }}">Produk</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}" href="{{ route('view_lapangan') }}">Lapangan</a>
+                            <a class="nav-link {{ request()->is('lapangan_user') ? 'active' : '' }}"
+                                href="{{ route('view_lapangan') }}">Lapangan</a>
                         </li>
                     </ul>
                 @endif
@@ -97,7 +108,7 @@
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <div class="container-fluid">
                             <a class="navbar-brand" href="#">@yield('title')</a>
-                            @if (session('is_logged_in') && request()->is('/'))                            
+                            @if (session('is_logged_in') && request()->is('/'))
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                         @yield('dynamic_nav_links')
@@ -142,6 +153,91 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pF9xv3JhNhJ5jUvDYpMDy5k3gnh+o34s+5BktmRVXHh/bT9jpBn8BvWBf5SL+xI1" crossorigin="anonymous">
     </script>
+    <script>
+        $(function() {
+            let copyButtonTrans = 'copy'
+            let csvButtonTrans = 'csv'
+            let excelButtonTrans = 'excel'
+            let pdfButtonTrans = 'pdf'
+            let printButtonTrans = 'print'
+            let colvisButtonTrans = 'Column visibility'
+            let languages = {
+                'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json'
+            };
+            $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, {
+                className: 'btn'
+            })
+            $.extend(true, $.fn.dataTable.defaults, {
+                language: {
+                    url: languages['{{ app()->getLocale() }}']
+                },
+                columnDefs: [{
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                }, {
+                    orderable: false,
+                    searchable: false,
+                    targets: -1
+                }],
+                select: {
+                    style: 'multi+shift',
+                    selector: 'td:first-child'
+                },
+                order: [],
+                scrollX: true,
+                pageLength: 100,
+                dom: 'lBfrtip<"actions">',
+                buttons: [{
+                        extend: 'copy',
+                        className: 'btn-outline-secondary mx-2',
+                        text: copyButtonTrans,
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'btn-outline-secondary mx-2',
+                        text: csvButtonTrans,
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn-outline-secondary mx-2',
+                        text: excelButtonTrans,
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        className: 'btn-outline-secondary mx-2',
+                        text: pdfButtonTrans,
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        className: 'btn-outline-secondary mx-2',
+                        text: printButtonTrans,
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                ]
+            });
+            $.fn.dataTable.ext.classes.sPageButton = '';
+        });
+    </script>
+    @stack('script-alt')
+    <!-- Page level custom scripts -->
+    <!-- <script src="{{ asset('backend/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('backend/js/demo/chart-pie-demo.js') }}"></script> -->
+
 </body>
 
 </html>

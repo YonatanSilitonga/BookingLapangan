@@ -67,12 +67,28 @@ class lapanganController extends Controller
         ], $messages);
 
 
+        // if ($request->hasFile('img_lapangan')) {
+        //     $fileNameWithExt = $request->file('img_lapangan')->getClientOriginalName();
+        //     $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        //     $extension = $request->file('img_lapangan')->getClientOriginalExtension();
+        //     $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
+        //     $path = $request->file('img_lapangan')->storeAs('public/img', $fileNameToStore);
+        //     $validatedData['img_lapangan'] = 'img/' . $fileNameToStore;
+        // }
+
         if ($request->hasFile('img_lapangan')) {
-            $fileNameWithExt = $request->file('img_lapangan')->getClientOriginalName();
+            $file = $request->file('img_lapangan');
+            $fileNameWithExt = $file->getClientOriginalName();
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('img_lapangan')->getClientOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
             $fileNameToStore = $fileName . '_' . time() . '.' . $extension;
-            $path = $request->file('img_lapangan')->storeAs('public/img', $fileNameToStore);
+
+            if (!file_exists(public_path('img'))) {
+                mkdir(public_path('img'), 0755, true);
+            }
+
+            $file->move(public_path('img'), $fileNameToStore);
+
             $validatedData['img_lapangan'] = 'img/' . $fileNameToStore;
         }
 
@@ -88,7 +104,7 @@ class lapanganController extends Controller
         return view('court.lapangan_edit', compact('lapangan'));
     }
 
-    
+
 
     public function update_lapangan(Request $request, string $id_lapangan)
     {
@@ -128,7 +144,7 @@ class lapanganController extends Controller
         return redirect()->route('lapangan_index')->with('success', 'Lapangan updated successfully');
     }
 
-    
+
 
 
     public function destroy_lapangan(string $id_lapangan)

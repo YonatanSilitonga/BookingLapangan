@@ -25,7 +25,6 @@
         @endif
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <p>Anda akan memesan :</p>
                 <h2>Lapangan {{ $lapangan->nama_lapangan }}</h2>
                 <hr>
                 <form action="{{ route('submit_booking') }}" method="POST">

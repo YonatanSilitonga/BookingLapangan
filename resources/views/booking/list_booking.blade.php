@@ -59,6 +59,7 @@
                                     <td>                                       
                                         <a href="{{ route('booking.show', $booking->id_booking_olahraga) }}" class="btn btn-primary">Detail</a>                                        
                                     </td>
+                                    
                                 </tr>
                                 @endif
                             @endforeach

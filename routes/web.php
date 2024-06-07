@@ -17,6 +17,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\KategoriLapanganController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,7 @@ Route::group(['middleware' => 'auth.check'], function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
     Route::get('/jadwal', [BookingController::class, 'showJadwal'])->name('jadwal.index');
+    Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 });
 
 
@@ -129,6 +131,11 @@ Route::get('/lapangan_user_show/{id}', [lapanganController::class, 'user_court_s
 // ==Lokasi==
 Route::post('/lapangan/lokasi/tambah', [LokasiController::class, 'store'])->name('create_lokasi');
 Route::get('/lapangan/{id}/edit', [LapanganController::class, 'edit_lapangan'])->name('update.lapangan');
+
+Route::get('/lokasi/check-related-users/{id}', [LokasiController::class, 'checkRelatedUsers']);
+Route::delete('/lokasi/{id}/destroy', [LokasiController::class, 'destroy_lokasi'])->name('lokasi.destroy');
+Route::get('/lokasi/check-related-users/{id}', [LokasiController::class, 'checkRelatedUsers']);
+
 
 Route::get('/lapangan/lokasi/{id}/edit', [LokasiController::class, 'edit_lokasi'])->name('update.lokasi');
 Route::put('/lapangan/lokasi/{id}/update', [LokasiController::class, 'update_lokasi'])->name('update.lok');
