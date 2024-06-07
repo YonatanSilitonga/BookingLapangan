@@ -29,10 +29,7 @@ class Lapangan extends Model
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi');
     }
-    public function manager()
-    {
-        return $this->belongsTo(Manager::class, 'id_lapangan','id_lapangan');
-    }
+    
     
 }
 

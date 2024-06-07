@@ -14,7 +14,7 @@
                     <th>Mulai</th>
                     <th>Selesai</th>
                     <th>Last Login</th>
-                    <th>Lapangan Bekerja</th>
+                    <th>Bekerja Di</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +26,7 @@
                         <td>{{ $manager->pengelola->tanggal_mulai }}</td>
                         <td>{{ $manager->pengelola->tanggal_selesai }}</td>
                         <td>{{ $manager->last_login }}</td>
-                        <td>{{ $manager->pengelola->lapangan->nama_lapangan }}</td>
+                        <td>{{ $manager->pengelola->lapangan->nama_lokasi }}</td>
                     </tr>
                 @endforeach
             </tbody>

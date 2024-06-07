@@ -20,9 +20,9 @@
     <div class="container">
         <h1>manager List</h1>
 
-        <!-- Add manager Button -->
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addmanagerModal">
-            Add manager
+        <!-- Add Manager Button -->
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addManagerModal">
+            Add Manager
         </button>
 
         <table class="table">
@@ -42,7 +42,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $manager->id_pengguna }}</td>
-                        <td>{{ optional($manager->pengelola)->status ?? 'Null'}}</td>
+                        <td>{{ optional($manager->pengelola)->status ?? 'Null' }}</td>
                         <td>{{ $manager->username_pengguna }}</td>
                         <td>{{ $manager->jenis_pengguna }}</td>
                         <td>{{ $manager->last_login }}</td>
@@ -64,13 +64,13 @@
         </table>
     </div>
 
-    <!-- Add manager Modal -->
-    <div class="modal fade" id="addmanagerModal" tabindex="-1" role="dialog" aria-labelledby="addmanagerModalLabel"
+    <!-- Add Manager Modal -->
+    <div class="modal fade" id="addManagerModal" tabindex="-1" role="dialog" aria-labelledby="addManagerModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addmanagerModalLabel">Add manager</h5>
+                    <h5 class="modal-title" id="addManagerModalLabel">Add Manager</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -78,10 +78,6 @@
                 <form action="{{ route('pengelola.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="id_pengguna">No ID</label>
-                            <input type="number" class="form-control" id="id_pengguna" name="id_pengguna" required>
-                        </div>
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
@@ -108,4 +104,6 @@
             </div>
         </div>
     </div>
+
+
 @endsection

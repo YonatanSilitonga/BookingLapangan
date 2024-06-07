@@ -81,6 +81,7 @@ Route::group(['middleware' => 'session_auth'], function () {
     Route::get('/edit/{id}', [KategoriLapanganController::class, 'edit'])->name('edit_katlapangan');
     Route::put('/kategori_lapangan/{id}', [KategoriLapanganController::class, 'update'])->name('kategori_lapangan.update');
     Route::delete('/kategori-lapangan/{id}', [KategoriLapanganController::class, 'destroy'])->name('kategori_lapangan.destroy');
+    Route::put('/update-status', [MemberController::class, 'updateStatus'])->name('updatedStatus');
 });
 
 

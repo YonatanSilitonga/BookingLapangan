@@ -26,8 +26,16 @@ class BookingController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'waktu_mulai' => 'required|date_format:Y-m-d\TH:i',
-
+            'waktu_mulai' => [
+                'required',
+                'date_format:Y-m-d\TH:i',
+                function ($attribute, $value, $fail) {
+                    $waktu_mulai = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $value);
+                    if ($waktu_mulai->isPast()) {
+                        $fail('Waktu mulai tidak boleh di bawah waktu sekarang.');
+                    }
+                },
+            ],
             'waktu_selesai' => [
                 'required',
                 'date_format:Y-m-d\TH:i',
@@ -35,13 +43,20 @@ class BookingController extends Controller
                 function ($attribute, $value, $fail) use ($request) {
                     $waktu_mulai = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $request->waktu_mulai);
                     $waktu_selesai = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i', $value);
+                    if ($waktu_selesai->diffInHours($waktu_mulai) > 4) {
+                        $fail('Waktu booking tidak boleh lebih dari 4 jam.');
+                    }
+
+                    if ($waktu_selesai->hour > 19 || ($waktu_selesai->hour == 19 && $waktu_selesai->minute > 0)) {
+                        $fail('Waktu selesai tidak boleh lebih dari jam 7 sore.');
+                    }
+
                     if ($waktu_selesai->diffInHours($waktu_mulai) < 1) {
                         $fail('Waktu selesai harus minimal 1 jam setelah waktu mulai.');
                     }
                 },
             ],
             'catatan' => 'nullable|string',
-            'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
             'lapangan_id' => 'required|exists:lapangan_olahraga,id_lapangan',
             'nama_lapangan' => 'required|string'
         ]);
@@ -53,15 +68,18 @@ class BookingController extends Controller
         // Dapatkan ID pengguna dari sesi
         $id_pengguna = session('id_pengguna');
 
-        var_dump($id_pengguna);
-
-
-
         // Pastikan ID pengguna ada sebelum menyimpan data
         if (!$id_pengguna) {
-            // Handle jika ID pengguna tidak tersedia
             return redirect()->back()->with('error', 'ID pengguna tidak valid.');
         }
+
+        // Dapatkan pengguna terkait
+        $pengguna = PenggunaOlahraga::findOrFail($id_pengguna);
+
+        $jenis_pelanggan = session('jenis_pelanggan');
+
+        // Tentukan status booking
+        $status = $jenis_pelanggan == 'member' ? 'approve' : 'pending';
 
         // Simpan data booking
         BookingOlahraga::create([
@@ -70,14 +88,16 @@ class BookingController extends Controller
             'waktu_mulai_booking' => $request->waktu_mulai,
             'waktu_selesai_booking' => $request->waktu_selesai,
             'catatan' => $request->catatan,
-            'nama_pemesan' =>  $request->nama,
-            'email_pemesan' =>  $request->email,
+            'nama_pemesan' => $request->nama,
+            'email_pemesan' => $request->email,
             'nama_lapangan' => $request->nama_lapangan,
+            'status' => $status,
             'created_by' => $request->nama
         ]);
 
-        return redirect()->route('view_lapangan')->with('success', 'Booking berhasil. Silahkan tunggu verifikasi dari admin.');
+        return redirect()->route('view_lapangan')->with('success', 'Booking berhasil. ' . ($status == 'approve' ? 'Booking Anda telah disetujui.' : 'Silahkan tunggu verifikasi dari admin.'));
     }
+
     public function bookingList()
     {
         $bookings = BookingOlahraga::with(['lapangan'])->get();
@@ -91,15 +111,9 @@ class BookingController extends Controller
         // Temukan booking berdasarkan ID
         $booking = BookingOlahraga::findOrFail($id);
 
-        // Dapatkan pengguna terkait booking
-        $pengguna = $booking->pengguna;
-
-        // Periksa apakah pengguna adalah member
-        if ($pengguna->isMember()) {
-            // Ubah status booking menjadi "approve"
-            $booking->status = 'approve';
-            $booking->save();
-        }
+        // Ubah status booking menjadi "approve"
+        $booking->status = 'approve';
+        $booking->save();
 
         // Ambil data semua booking dari database
         $bookings = BookingOlahraga::with(['lapangan'])->get();
